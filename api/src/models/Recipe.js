@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING
     },
 
+    dishTypes: {
+      type: DataTypes.STRING
+    },
+
     createdInDb: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

@@ -15,18 +15,20 @@ export default function Detail(props){
         dispatch(getDetail(id));
     }, [dispatch, id])
 
-    const recipe = useSelector((state)=> state.recipes)
+    const thisRecipe = useSelector((state)=> state.detail)
     //const steps = thisRecipe.analyzedInstructions.map((s)=> s.steps.map((el) => el.step));
     //const diets = thisRecipe.diets.map(el => el.name).join(", ")
-    let thisRecipe = recipe.find((r)=> r.id.toString() === id.toString());
-    //console.log(thisRecipe, "THIS RECIPE")
-    let diets = thisRecipe && thisRecipe.diets.map(el=> el.name).join(", ");
-    console.log(thisRecipe)
-    let dishTypes = thisRecipe && 
-                        (!thisRecipe.createdInDb ? thisRecipe.dishTypes.join(', ') : thisRecipe.dishTypes)
+    /* const thisRecipe = recipe.find((r)=> r.id.toString() === id.toString()); */
+    
+    console.log({thisRecipe})
+    const diets = thisRecipe && thisRecipe.diets.map(el=> el.name).join(", ");
 
-    let image = thisRecipe &&
-                (!thisRecipe.createdInDb ? thisRecipe.image : 'https://i.ytimg.com/vi/PKQHs7DuweM/maxresdefault.jpg')
+    const dishTypes = thisRecipe && 
+                        (!thisRecipe.createdInDb ? thisRecipe.dishTypes.join(', ') : thisRecipe.dishTypes)
+    console.log(dishTypes, "LLEGA?")
+
+    const image = thisRecipe &&
+                (!thisRecipe.createdInDb ? thisRecipe.image : 'https://image.freepik.com/foto-gratis/pizarra-negra-palabra-food-verduras-alrededor_1220-556.jpg')
     //console.log(thisRecipe, "ACA ES")
     return (
         <div className={s.details}> 
@@ -35,6 +37,9 @@ export default function Detail(props){
                 <div>
                     <img className={s.img} src= {image} alt="img not found" />
                      <h1>{thisRecipe.name}</h1>
+                     <br/>
+                     <h2>Summary</h2>
+                        <p>{thisRecipe.summary} </p>
                     <h2>Dish types</h2>
                         <p>{dishTypes}</p>
                     <h2>Diet type</h2>

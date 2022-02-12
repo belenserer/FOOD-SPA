@@ -3,12 +3,12 @@ const axios = require ('axios');
 const { Recipe, Diet } = require ('../db');
 const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
 require('dotenv').config();
-const {API_KEY3} = process.env
+const {API_KEY} = process.env
 const router = Router();
 
 
 const getApiInfo = async () => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&number=10&addRecipeInformation=true`);
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`);
     //console.log({apiUrl}) 
 
     const apiInfo = await apiUrl.data.results.map((el) => {
@@ -49,13 +49,15 @@ const getApiInfo = async () => {
   };
 
   const getAllRecipes = async () => {
-      const apiInfo = await getApiInfo();
+    const dbInfo = await getDbInfo();
+    
+    const apiInfo = await getApiInfo();
       /* console.log("after getApiInfo") */
-      const dbInfo = await getDbInfo();
+      
       /* console.log("after getDBInfo") */
-      const allInfo = apiInfo.concat(dbInfo)
+    const allInfo = apiInfo.concat(dbInfo)
       /* console.log("after allInfo") */
-      return allInfo
+    return allInfo
   };
 
 router.get('/', async (req, res) =>{
@@ -74,23 +76,30 @@ router.get('/', async (req, res) =>{
 router.get('/:idRecipe', async (req, res) =>{
     try {
     const { idRecipe } = req.params
-    let allRecipes = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&number=10&addRecipeInformation=true`);
-    let one = await allRecipes.data.results.find(el => parseInt(el.id) === parseInt(idRecipe))
-    /* console.log({one}) */
+    let allRecipes = await getAllRecipes();
+    //axios.get(
+        //`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`);
+    let one = await allRecipes.find(el => (el.id) === (idRecipe))
+    //console.log({one})
+   
+    let steps = one.createdInDb ? one.steps : one.analyzedInstructions.map((s)=> s.steps.map((el) => el.step))
+    console.log(one.diets)
+
     res.json({
         id: one.id,
         name: one.title,
         summary: one.summary,
         spoonacularScore: one.spoonacularScore,
         healthScore: one.healthScore,
-        steps: one.analyzedInstructions.map((s)=> s.steps.map((el) => el.step)),
+        steps: steps,
         image: one.image,
-        diets: one.diets.map((e) => { return {name: e}}),
-        dishTypes: one.dishTypes
+        diets: one.diets.map((e) => { return {name: e.name}}),
+        dishTypes: one.dishTypes,
+        createdInDb: one.createdInDb
         });
         /* console.log({one}) */
     } catch (error){
+        console.log(error)
         res.status(200).send ('El id de la receta no fue encontrado');
     }  
 
@@ -102,18 +111,20 @@ router.post('/', async (req, res) =>{
     const {
         name,
         summary,
+        dishTypes,
         spoonacularScore,
         healthScore,
         steps,
         diets,
         createdInDb
     } = req.body
-    console.log(diets, "ENTRA EN BODY")
+    /* console.log(diets, "ENTRA EN BODY") */
 
     let newRecipe = await Recipe.create({
         
             name,
             summary,
+            dishTypes,
             spoonacularScore,
             healthScore,
             steps,
@@ -124,11 +135,12 @@ router.post('/', async (req, res) =>{
     let dbDiets = await Diet.findAll({
         where: { name: diets},
     });
-        console.log(diets, "DIETS")
+        /* console.log(diets, "DIETS") */
+
     //agrego la dieta de la nueva receta a la DB
 
     await newRecipe.addDiets(dbDiets)
-    console.log(dbDiets, "DB DIETS")
+    //console.log(dbDiets, "DB DIETS")
     res.status(200).send("Receta creada con exito");
 
     } catch (err){

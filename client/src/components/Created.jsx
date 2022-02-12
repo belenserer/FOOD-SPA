@@ -23,6 +23,7 @@ export default function CreateRecipe(){
         summary: "",
         spoonacularScore: "",
         healthScore: "",
+        dishTypes:"",
         steps: ""
     });
 
@@ -48,6 +49,16 @@ export default function CreateRecipe(){
             }
         } else { 
             check.summary = undefined
+            }
+        
+        // validar tipo de plato
+        if (form.hasOwnProperty('dishTypes')){
+            if(!form.dishTypes.length) check.dishTypes = "Debes completar el campo Tipo de plato";
+            else if (!form.dishTypes.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
+                check.dishTypes = "No se admiten símbolos, sólo texto";
+            }
+        } else { 
+            check.dishTypes = undefined
             }
         
         //validar puntuación
@@ -109,6 +120,17 @@ export default function CreateRecipe(){
             return {
                 ...prev,
                 summary: v.target.value
+                };
+        });
+        let check = validatorForm()
+        setErrors(check)
+    };
+
+    const onDishTypes = (v) => {
+        setForm((prev) => {
+            return {
+                ...prev,
+                dishTypes: v.target.value
                 };
         });
         let check = validatorForm()
@@ -212,6 +234,20 @@ export default function CreateRecipe(){
                         <span>{errors.summary}</span>
                         )}
                 </div>
+                <div>
+                    <h4>Tipo de plato:</h4>
+                    <input
+                    required
+                    onChange={(e) => onDishTypes(e)} 
+                    type="text" 
+                    name="dishTypes"
+                    value= {form.dishTypes} 
+                    />
+                    <br/>
+                    {errors.dishTypes && (
+                        <span>{errors.dishTypes}</span>
+                        )}
+                </div>
                 
                 <div>
                     <h4>Puntuación:</h4>
@@ -249,7 +285,7 @@ export default function CreateRecipe(){
                     required
                     onChange={(e) => onSteps(e)} 
                     type="text" 
-                    name="analyzedInstructions"
+                    name="steps"
                     value= {form.steps} 
                     />
                     <br/>
