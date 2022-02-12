@@ -20,12 +20,12 @@ export default function Detail(props){
     //const diets = thisRecipe.diets.map(el => el.name).join(", ")
     /* const thisRecipe = recipe.find((r)=> r.id.toString() === id.toString()); */
     
-    console.log({thisRecipe})
+    //console.log({thisRecipe})
     const diets = thisRecipe && thisRecipe.diets.map(el=> el.name).join(", ");
 
     const dishTypes = thisRecipe && 
                         (!thisRecipe.createdInDb ? thisRecipe.dishTypes.join(', ') : thisRecipe.dishTypes)
-    console.log(dishTypes, "LLEGA?")
+    //console.log(dishTypes, "LLEGA?")
 
     const image = thisRecipe &&
                 (!thisRecipe.createdInDb ? thisRecipe.image : 'https://image.freepik.com/foto-gratis/pizarra-negra-palabra-food-verduras-alrededor_1220-556.jpg')
@@ -39,7 +39,7 @@ export default function Detail(props){
                      <h1>{thisRecipe.name}</h1>
                      <br/>
                      <h2>Summary</h2>
-                        <p>{thisRecipe.summary} </p>
+                        <p dangerouslySetInnerHTML={{ __html: thisRecipe.summary }}/>
                     <h2>Dish types</h2>
                         <p>{dishTypes}</p>
                     <h2>Diet type</h2>
