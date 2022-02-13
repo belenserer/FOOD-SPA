@@ -65,12 +65,14 @@ export default function Home() {
 
     return(
         <div className={s.home}>
-            <NavLink to='/Home/create'>
-                Crear Receta
-            </NavLink>
+           
             <h1 className={s.h1}>
                 ENCUENTRA QUE COMER HOY
             </h1>
+            <br/>
+             <NavLink to='/Home/create'>
+                Crear Receta
+            </NavLink>
             <NavBar/>
             <button onClick={e=> {handleClick(e)}}>
                 Volver a todas las recetas
@@ -113,6 +115,11 @@ export default function Home() {
                         </div>
                     );
                 })}
+                <Paginado
+                    render = {render}
+                    allRecipes = {allRecipes.length}
+                    paginado = {paginado}
+                />
             </div>
         </div>
     );

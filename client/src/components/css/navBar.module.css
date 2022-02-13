@@ -1,0 +1,28 @@
+.navBar_div{
+    width: 100%;
+}
+
+.navBar_div input{
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+
+}
+
+.navBar_div button{
+    padding: 8px;
+    border-radius: 3px;
+    border: none;
+    margin-left: 1px;
+}
+
+.navBar_div button:active{
+    position: relative;
+    top: 1.5px;
+}
+
+.navBar_div button:hover{
+    background-color: rgba(0, 0, 0, 0.178);
+    cursor: pointer;
+}

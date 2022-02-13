@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameRecipes } from "../Redux/actions";
+import s from "./css/navBar.module.css";
 
 export default function NavBar(){
     const distpach = useDispatch()
@@ -21,7 +22,7 @@ export default function NavBar(){
     }
 
     return (
-        <div>
+        <div className={s.navBar_div}>
             <input 
             type= 'text' 
             placeholder="Buscar comidas"

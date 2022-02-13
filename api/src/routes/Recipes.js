@@ -3,12 +3,12 @@ const axios = require ('axios');
 const { Recipe, Diet } = require ('../db');
 const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
 require('dotenv').config();
-const {API_KEY} = process.env
+const {API_KEY1} = process.env
 const router = Router();
 
 
 const getApiInfo = async () => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`);
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY1}&number=100&addRecipeInformation=true`);
     //console.log({apiUrl}) 
 
     const apiInfo = await apiUrl.data.results.map((el) => {
@@ -81,14 +81,14 @@ router.get('/:idRecipe', async (req, res) =>{
         //`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`);
     let one = await allRecipes.find(el => (el.id.toString()) === (idRecipe))
     
-   // console.log({one})
+   console.log({one})
     //let steps = one.createdInDb ? one.steps : one.steps.map((s)=> s.steps.map((el) => el.step))
     
     //console.log(steps, "STEPS")
 
     res.json({
         id: one.id,
-        name: one.title,
+        name: one.name,
         summary: one.summary,
         spoonacularScore: one.spoonacularScore,
         healthScore: one.healthScore,

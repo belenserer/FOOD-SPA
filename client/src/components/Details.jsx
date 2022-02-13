@@ -36,6 +36,7 @@ export default function Detail(props){
                 thisRecipe !== undefined ?
                 <div>
                     <img className={s.img} src= {image} alt="img not found" />
+
                      <h1>{thisRecipe.name}</h1>
                      <br/>
                      <h2>Summary</h2>

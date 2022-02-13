@@ -1,14 +1,20 @@
 .details{
-    background: rgba( 255, 255, 255, 0 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 8.5px );
-    -webkit-backdrop-filter: blur( 8.5px );
+    background: rgba( 83, 82, 82, 0.5 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 8px );
+-webkit-backdrop-filter: blur( 8px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding: 20px 0px;
-    width: 100%;
+    width: 60%;
     min-height: 100vh;
     margin: auto;
+    color: azure
+}
+
+a{
+    text-decoration: none;
+    color: azure;
 }
 
 .img{
