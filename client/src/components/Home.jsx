@@ -11,7 +11,7 @@ import Detail from "./Details";
 
 export default function Home() {
     const dispatch = useDispatch()
-    const allRecipes = useSelector((state) => state.recipes)
+    const recipes = useSelector((state) => state.recipes)
     //comienza el current en 1(será la primer página)
     const [currentPage, setCurrentPage] = useState(1)
     
@@ -26,7 +26,7 @@ export default function Home() {
 
     //Las 9 recetas a renderizar van a ser resultado de un slice de la totalidad de recetas
   //devolverá un array con los indices definidos desde el primero y el ultimo, dependiendo de en qué pagina me encuentro (valor de currentPage)
-  const currentRender = allRecipes.slice(firstPageIndex, lastPageIndex);
+  const currentRender = recipes.slice(firstPageIndex, lastPageIndex);
   const [orden, setOrden] = useState('');
 
   const paginado = (pageNumber) => {
@@ -107,7 +107,7 @@ export default function Home() {
                 <br/>
                 <Paginado
                     render = {render}
-                    allRecipes = {allRecipes.length}
+                    allRecipes = {recipes.length}
                     paginado = {paginado}
                 />
                 {currentRender?.map((el)=>{
@@ -121,7 +121,7 @@ export default function Home() {
                 })}
                 <Paginado
                     render = {render}
-                    allRecipes = {allRecipes.length}
+                    allRecipes = {recipes.length}
                     paginado = {paginado}
                 />
             </div>
