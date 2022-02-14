@@ -3,11 +3,11 @@
     min-height: 120vh;
     width: 80%;
     background: rgba( 108, 107, 107, 0.3 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 9.5px );
--webkit-backdrop-filter: blur( 9.5px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 9.5px );
+    -webkit-backdrop-filter: blur( 9.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .h1 {
@@ -18,3 +18,35 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
     background-color: rgba(240, 255, 255, 0.486);
     padding: 5px 0px;
 }
+
+.button{
+    padding: 8px;
+    border-radius: 3px;
+    border: none;
+    margin-left: 1px;
+}
+
+.button:active{
+    position: relative;
+    top: 1.5px;
+}
+
+.button:hover{
+    background-color: rgba(0, 0, 0, 0.178);
+    cursor: pointer;
+}
+
+.select {
+    font-size: 14px;
+    margin: 5px;
+    width: 30%;
+    height: 40px;
+    background: #ecf0f3;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+  }
+  .select:focus {
+    border: solid 0.01px rgb(161, 120, 120);
+  }

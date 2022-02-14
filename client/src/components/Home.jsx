@@ -73,12 +73,15 @@ export default function Home() {
              <NavLink to='/Home/create'>
                 Crear Receta
             </NavLink>
+            <br/>
             <NavBar/>
-            <button onClick={e=> {handleClick(e)}}>
+            <br/>
+            <button className={s.button} onClick={e=> {handleClick(e)}}>
                 Volver a todas las recetas
             </button>
+            <br/>
             <div>
-                <select onChange= {e=> handleFiltered(e)}>
+                <select className={s.select} onChange= {e=> handleFiltered(e)}>
                     <option>Tipo de dieta </option>
                     <option value="all">Todas </option>
                     <option value="vegan">Vegan</option>
@@ -91,16 +94,17 @@ export default function Home() {
                     <option value="whole 30">Whole 30</option>
                     <option value="paleolithic">Paleolithic</option>
                 </select>
-                <select onChange= {e=> handleSortScore(e)}>
+                <select className={s.select} onChange= {e=> handleSortScore(e)}>
                     <option value="spoonacularScore">Puntuación</option>
                     <option value= "asc">Menor puntuación </option>
                     <option value="desc">Mayor puntuación</option>
                 </select>
-                <select onChange= {e=> handleSort(e)}>
+                <select className={s.select} onChange= {e=> handleSort(e)}>
                     <option value= "title">Nombre</option>
                     <option value= "asc">A-Z </option>
                     <option value="desc">Z-A</option>
                 </select>
+                <br/>
                 <Paginado
                     render = {render}
                     allRecipes = {allRecipes.length}

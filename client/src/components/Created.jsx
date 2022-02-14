@@ -206,7 +206,7 @@ export default function CreateRecipe(){
             <h1>Crea tu receta</h1>
             <form onSubmit={(e) => onSubmit(e)}>
                 <div>
-                    <h4>Nombre:</h4>
+                    <h4>Nombre</h4>
                     <input 
                     required
                     onChange={(e) => onName(e)}
@@ -221,7 +221,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Resumen del plato:</h4>
+                    <h4>Resumen del plato</h4>
                     <input
                     required
                     onChange={(e) => onSummary(e)} 
@@ -235,7 +235,7 @@ export default function CreateRecipe(){
                         )}
                 </div>
                 <div>
-                    <h4>Tipo de plato:</h4>
+                    <h4>Tipo de plato</h4>
                     <input
                     required
                     onChange={(e) => onDishTypes(e)} 
@@ -250,7 +250,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Puntuación:</h4>
+                    <h4>Puntuación</h4>
                     <input 
                     required
                     onChange={(e)=> onScore(e)}
@@ -265,7 +265,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Nivel de "comida saludable":</h4>
+                    <h4>Es saludable?</h4>
                     <input 
                     required
                     onChange={(e) => onHealtScore(e)}
@@ -280,7 +280,7 @@ export default function CreateRecipe(){
                 </div>
 
                 <div>
-                    <h4>Pasos a realizar:</h4>
+                    <h4>Pasos a realizar</h4>
                     <input
                     required
                     onChange={(e) => onSteps(e)} 
