@@ -2,12 +2,11 @@ import React from "react";
 import s from "./css/home.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRecipes, filteredRecipesByDiet, orderByName, orderByScore} from '../Redux/actions/index';
+import { getAllRecipes, filteredRecipesByDiet, orderBy } from '../Redux/actions/index';
 import { Link, NavLink } from 'react-router-dom';
 import Card from "./Card";
 import Paginado from "./Pages";
 import NavBar from "./NavBar";
-import Detail from "./Details";
 
 export default function Home() {
     const dispatch = useDispatch()
@@ -26,8 +25,10 @@ export default function Home() {
 
     //Las 9 recetas a renderizar van a ser resultado de un slice de la totalidad de recetas
   //devolverá un array con los indices definidos desde el primero y el ultimo, dependiendo de en qué pagina me encuentro (valor de currentPage)
+
+  //Este slice es para el paginado
   const currentRender = recipes.slice(firstPageIndex, lastPageIndex);
-  const [orden, setOrden] = useState('');
+  
 
   const paginado = (pageNumber) => {
       setCurrentPage(pageNumber)
@@ -49,18 +50,19 @@ export default function Home() {
         dispatch(filteredRecipesByDiet(e.target.value));
     }
 
-    function handleSort(e){
+    function handleSortName(e){
         e.preventDefault();
-        dispatch(orderByName(e.target.value))
+        dispatch(orderBy(e.target.value, "name"))
         setCurrentPage(1);
-        setOrden(`Ordenado ${e.target.value}`)
+        
     }
 
     function handleSortScore(e){
         e.preventDefault();
-        dispatch(orderByScore(e.target.value))
+        let action = orderBy(e.target.value, "spoonacularScore")
+        dispatch(action)
         setCurrentPage(1);
-        setOrden(`Ordenado ${e.target.value}`)
+        
     }
 
     return(
@@ -99,7 +101,7 @@ export default function Home() {
                     <option value= "asc">Menor puntuación </option>
                     <option value="desc">Mayor puntuación</option>
                 </select>
-                <select className={s.select} onChange= {e=> handleSort(e)}>
+                <select className={s.select} onChange= {e=> handleSortName(e)}>
                     <option value= "title">Nombre</option>
                     <option value= "asc">A-Z </option>
                     <option value="desc">Z-A</option>
@@ -119,6 +121,7 @@ export default function Home() {
                         </div>
                     );
                 })}
+                {currentRender.length === 0 && "No existen recetas con ése nombre"}
                 <Paginado
                     render = {render}
                     allRecipes = {recipes.length}

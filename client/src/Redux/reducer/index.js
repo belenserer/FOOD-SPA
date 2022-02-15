@@ -1,4 +1,4 @@
-import { GET_ALL_RECIPES, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE, GET_NAME_RECIPES, GET_DIETS, POST_RECIPE, GET_DETAIL} from "../actions";
+import { GET_ALL_RECIPES, FILTER_BY_DIET, ORDER_BY, GET_NAME_RECIPES, GET_DIETS, POST_RECIPE, GET_DETAIL} from "../actions";
 
 const initialState = {
     recipes : [],
@@ -9,6 +9,7 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
+    
     switch (action.type){
         case GET_ALL_RECIPES:
             return {
@@ -40,39 +41,45 @@ function rootReducer(state = initialState, action) {
 
             }
         
-        case ORDER_BY_NAME:
-            let orderByName = action.payload === "asc" ?
-            state.recipes.sort(function (a,b) {
-                if (a.name.toLowerCase() > b.name.toLowerCase()){ return 1};
-                if (b.name.toLowerCase() > a.name.toLowerCase()){ return -1};
-                return 0;
-            }) :
-            state.recipes.sort(function (a,b){
-                if(a.name.toLowerCase() > b.name.toLowerCase()){return -1};
-                if (b.name.toLowerCase() > a.name.toLowerCase()){return 1};
-                return 0;
-            })
-            return {
-                ...state,
-                recipes: orderByName
+        case ORDER_BY:
+            
+            let sortedRecipes
+
+            if (action.payload.campo === "name" && action.payload.orden === "asc"){
+                sortedRecipes = state.recipes.slice().sort(function (a,b) {
+                    if (a.name.toLowerCase() > b.name.toLowerCase()){ return 1};
+                    if (b.name.toLowerCase() > a.name.toLowerCase()){ return -1};
+                    return 0;
+                })
             }
-        
-        case ORDER_BY_SCORE:
-            let orderByScore = action.payload === "asc" ?
-            state.recipes.sort(function (a,b) {
-                if (a.spoonacularScore > b.spoonacularScore){ return 1};
-                if (b.spoonacularScore > a.spoonacularScore){ return -1};
-                return 0;
-            }) :
-            state.recipes.sort(function (a,b){
-                if(a.spoonacularScore > b.spoonacularScore){return -1};
-                if (b.spoonacularScore > a.spoonacularScore){return 1};
-                return 0;
-            })
+            if (action.payload.campo === "name" && action.payload.orden === "desc"){
+                sortedRecipes = state.recipes.slice().sort(function (a,b){
+                    if(a.name.toLowerCase() > b.name.toLowerCase()){return -1};
+                    if (b.name.toLowerCase() > a.name.toLowerCase()){return 1};
+                    return 0;
+                })            
+            }
+
+            if (action.payload.campo === "spoonacularScore" && action.payload.orden === "asc"){
+                sortedRecipes = state.recipes.slice().sort(function (a,b) {
+                    if (a.spoonacularScore > b.spoonacularScore){ return 1};
+                    if (b.spoonacularScore > a.spoonacularScore){ return -1};
+                    return 0;
+                })  
+            }
+
+            if (action.payload.campo === "spoonacularScore" && action.payload.orden === "desc"){
+                sortedRecipes = state.recipes.slice().sort(function (a,b){
+                    if(a.spoonacularScore > b.spoonacularScore){return -1};
+                    if (b.spoonacularScore > a.spoonacularScore){return 1};
+                    return 0;
+                })
+            }
+
             return {
                 ...state,
-                recipes: orderByScore
-                }
+                recipes: sortedRecipes
+            }
     
         case GET_NAME_RECIPES:
             return {

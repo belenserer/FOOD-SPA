@@ -1,14 +1,12 @@
 const { Router } = require ('express');
 const axios = require ('axios');
 const { Recipe, Diet } = require ('../db');
-const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
-require('dotenv').config();
-const {API_KEY2} = process.env
+const {API_KEY1} = process.env
 const router = Router();
 
 
 const getApiInfo = async () => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&number=100&addRecipeInformation=true`);
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY1}&number=100&addRecipeInformation=true`);
     //console.log({apiUrl}) 
 
     const apiInfo = await apiUrl.data.results.map((el) => {
@@ -40,13 +38,8 @@ const getApiInfo = async () => {
       return await Recipe.findAll({
           include: Diet
       })
-      //{
-      //    where: {
-      //        model: Diet,
-      //        atribute: ['name']
-      //    }
-      //})
   };
+
 
   const getAllRecipes = async () => {
     const dbInfo = await getDbInfo();
@@ -54,7 +47,6 @@ const getApiInfo = async () => {
     const apiInfo = await getApiInfo();
       /* console.log("after getApiInfo") */
       
-      /* console.log("after getDBInfo") */
     const allInfo = apiInfo.concat(dbInfo)
       /* console.log("after allInfo") */
     return allInfo
@@ -65,9 +57,8 @@ router.get('/', async (req, res) =>{
     const allRecipes = await getAllRecipes();
     
     if (name){
-        let recipeName = await allRecipes.filter(el => el.name.toLowerCase().includes(name.toLocaleLowerCase()))
+        let recipeName = allRecipes.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
         res.status(200).send(recipeName)
-        /* res.status(404).send('No existe el plato buscado'); */
     } else {
         res.status(200).send(allRecipes)
     }
@@ -77,14 +68,8 @@ router.get('/:idRecipe', async (req, res) =>{
     try {
     const { idRecipe } = req.params
     let allRecipes = await getAllRecipes();
-    //axios.get(
-        //`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`);
-    let one = await allRecipes.find(el => (el.id.toString()) === (idRecipe))
     
-   console.log({one})
-    //let steps = one.createdInDb ? one.steps : one.steps.map((s)=> s.steps.map((el) => el.step))
-    
-    //console.log(steps, "STEPS")
+    let one = await allRecipes.find(el => (el.id.toString()) === (idRecipe.toString()))
 
     res.json({
         id: one.id,

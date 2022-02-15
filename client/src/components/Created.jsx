@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { postRecipe, getDiets, getAllRecipes } from "../Redux/actions";
+import { postRecipe, getDiets } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // REVISAR ÉSTA FUNCION. CREA LAS RECETAS PERO NO MANDA LA ACCION EN LA CONSOLA!
 

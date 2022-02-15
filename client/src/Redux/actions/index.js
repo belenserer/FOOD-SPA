@@ -2,8 +2,8 @@ import axios from "axios";
 export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
 export const GET_DIETS = 'GET_DIETS';
 export const FILTER_BY_DIET = 'FILTER_BY_DIET';
-export const ORDER_BY_NAME = 'ORDER_BY_NAME';
-export const ORDER_BY_SCORE = 'ORDER_BY_SCORE';
+export const ORDER_BY = 'ORDER_BY';
+//export const ORDER_BY_SCORE = 'ORDER_BY_SCORE';
 export const GET_NAME_RECIPES = 'GET_NAME_RECIPES';
 export const POST_RECIPE = 'POST_RECIPE';
 export const GET_DETAIL = 'GET_DETAIL';
@@ -51,19 +51,13 @@ export function filteredRecipesByDiet(payload){
     }
 };
 
-export function orderByName(payload){
-    return{
-        type: ORDER_BY_NAME,
-        payload
+export function orderBy(orden, campo){
+    return {
+        type: ORDER_BY,
+        payload: {orden, campo}
     }
 };
 
-export function orderByScore(payload){
-    return {
-        type: ORDER_BY_SCORE,
-        payload
-    }
-};
 
 export function getNameRecipes(payload){
     return async function (distpach){
