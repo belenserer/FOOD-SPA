@@ -51,10 +51,10 @@ export function filteredRecipesByDiet(payload){
     }
 };
 
-export function orderBy(orden, campo){
+export function orderBy(orden){
     return {
         type: ORDER_BY,
-        payload: {orden, campo}
+        payload: orden
     }
 };
 

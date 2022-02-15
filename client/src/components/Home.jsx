@@ -50,21 +50,13 @@ export default function Home() {
         dispatch(filteredRecipesByDiet(e.target.value));
     }
 
-    function handleSortName(e){
+    function handleSort(e){
         e.preventDefault();
-        dispatch(orderBy(e.target.value, "name"))
+        dispatch(orderBy(e.target.value))
         setCurrentPage(1);
         
     }
-
-    function handleSortScore(e){
-        e.preventDefault();
-        let action = orderBy(e.target.value, "spoonacularScore")
-        dispatch(action)
-        setCurrentPage(1);
-        
-    }
-
+    
     return(
         <div className={s.home}>
            
@@ -84,8 +76,7 @@ export default function Home() {
             <br/>
             <div>
                 <select className={s.select} onChange= {e=> handleFiltered(e)}>
-                    <option>Tipo de dieta </option>
-                    <option value="all">Todas </option>
+                    <option value="all">Todas las dietas </option>
                     <option value="vegan">Vegan</option>
                     <option value="gluten free">Gluten free</option>
                     <option value="dairy free">Dairy free</option>
@@ -96,15 +87,12 @@ export default function Home() {
                     <option value="whole 30">Whole 30</option>
                     <option value="paleolithic">Paleolithic</option>
                 </select>
-                <select className={s.select} onChange= {e=> handleSortScore(e)}>
-                    <option value="spoonacularScore">Puntuación</option>
-                    <option value= "asc">Menor puntuación </option>
-                    <option value="desc">Mayor puntuación</option>
-                </select>
-                <select className={s.select} onChange= {e=> handleSortName(e)}>
-                    <option value= "title">Nombre</option>
-                    <option value= "asc">A-Z </option>
-                    <option value="desc">Z-A</option>
+                <select className={s.select} onChange= {e=> handleSort(e)}>
+                    <option value="">Orden por</option>
+                    <option value= "ascScore">Menor puntuación </option>
+                    <option value="descScore">Mayor puntuación</option>
+                    <option value= "ascName">Name A-Z </option>
+                    <option value="descName">Name Z-A</option>
                 </select>
                 <br/>
                 <Paginado

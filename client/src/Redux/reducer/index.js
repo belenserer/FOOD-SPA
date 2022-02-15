@@ -9,6 +9,7 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
+    // { type: ORDER_BY, payload: "nameAsc"}
     
     switch (action.type){
         case GET_ALL_RECIPES:
@@ -45,14 +46,14 @@ function rootReducer(state = initialState, action) {
             
             let sortedRecipes
 
-            if (action.payload.campo === "name" && action.payload.orden === "asc"){
+            if (action.payload === "ascName"){
                 sortedRecipes = state.recipes.slice().sort(function (a,b) {
                     if (a.name.toLowerCase() > b.name.toLowerCase()){ return 1};
                     if (b.name.toLowerCase() > a.name.toLowerCase()){ return -1};
                     return 0;
                 })
             }
-            if (action.payload.campo === "name" && action.payload.orden === "desc"){
+            if (action.payload === "descName"){
                 sortedRecipes = state.recipes.slice().sort(function (a,b){
                     if(a.name.toLowerCase() > b.name.toLowerCase()){return -1};
                     if (b.name.toLowerCase() > a.name.toLowerCase()){return 1};
@@ -60,7 +61,7 @@ function rootReducer(state = initialState, action) {
                 })            
             }
 
-            if (action.payload.campo === "spoonacularScore" && action.payload.orden === "asc"){
+            if (action.payload === "ascScore"){
                 sortedRecipes = state.recipes.slice().sort(function (a,b) {
                     if (a.spoonacularScore > b.spoonacularScore){ return 1};
                     if (b.spoonacularScore > a.spoonacularScore){ return -1};
@@ -68,12 +69,16 @@ function rootReducer(state = initialState, action) {
                 })  
             }
 
-            if (action.payload.campo === "spoonacularScore" && action.payload.orden === "desc"){
+            if (action.payload === "descScore"){
                 sortedRecipes = state.recipes.slice().sort(function (a,b){
                     if(a.spoonacularScore > b.spoonacularScore){return -1};
                     if (b.spoonacularScore > a.spoonacularScore){return 1};
                     return 0;
                 })
+            }
+
+            if (action.payload === ""){
+                sortedRecipes = state.allRecipes
             }
 
             return {
