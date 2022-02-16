@@ -56,27 +56,27 @@ export default function Home() {
         setCurrentPage(1);
         
     }
-    
+
     return(
         <div className={s.home}>
            
             <h1 className={s.h1}>
-                ENCUENTRA QUE COMER HOY
+                FIND YOUR FOOD
             </h1>
             <br/>
              <NavLink to='/Home/create'>
-                Crear Receta
+                Create Recipe
             </NavLink>
             <br/>
             <NavBar/>
             <br/>
             <button className={s.button} onClick={e=> {handleClick(e)}}>
-                Volver a todas las recetas
+                Reset
             </button>
             <br/>
             <div>
                 <select className={s.select} onChange= {e=> handleFiltered(e)}>
-                    <option value="all">Todas las dietas </option>
+                    <option value="all">All recipes </option>
                     <option value="vegan">Vegan</option>
                     <option value="gluten free">Gluten free</option>
                     <option value="dairy free">Dairy free</option>
@@ -88,13 +88,14 @@ export default function Home() {
                     <option value="paleolithic">Paleolithic</option>
                 </select>
                 <select className={s.select} onChange= {e=> handleSort(e)}>
-                    <option value="">Orden por</option>
-                    <option value= "ascScore">Menor puntuación </option>
-                    <option value="descScore">Mayor puntuación</option>
+                    <option value="">Order by</option>
+                    <option value= "ascScore">Lower score </option>
+                    <option value="descScore">Higher score</option>
                     <option value= "ascName">Name A-Z </option>
                     <option value="descName">Name Z-A</option>
                 </select>
                 <br/>
+                <button> </button>
                 <Paginado
                     render = {render}
                     allRecipes = {recipes.length}
@@ -109,7 +110,7 @@ export default function Home() {
                         </div>
                     );
                 })}
-                {currentRender.length === 0 && "No existen recetas con ése nombre"}
+                {currentRender.length === 0 && "Sorry, no matches found"}
                 <Paginado
                     render = {render}
                     allRecipes = {recipes.length}

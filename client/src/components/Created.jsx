@@ -27,154 +27,143 @@ export default function CreateRecipe(){
         steps: ""
     });
 
-    const validatorForm = () => {
+    const validatorForm = (newForm) => {
         let check = {};
         //validar nombre
-        if(form.hasOwnProperty('name')){
-            if(!form.name.length) check.name = "Debes completar el campo Nombre";
-            else if (form.name.length < 4) check.name = "El nombre de la comida debe contener al menos 4 caracteres";
-            else if (!form.name.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
-                check.name = "No se admiten valores diferentes a letras";
+        if(newForm){
+            if(!newForm.name.length) check.name = "Must have a name";
+            //else if (!newForm.name.split("").some((n) =>  isNaN(Number(n)))) check.name = "Numbers not allowed"
+            else if (newForm.name.length < 3) check.name = "Must have more than 3 letters";
+            else if (!newForm.name.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
+                check.name = "Only letters are allowed";
             }
         } else { 
             check.name = undefined
         }
         
         // validar resumen del plato
-        if (form.hasOwnProperty('summary')){
-            if(!form.summary.length) check.summary = "Debes completar el campo Resumen del plato";
-            else if (form.summary.length < 10) check.summary = "El resumen del plato de la comida debe contener al menos 10 caracteres";
-            else if (!form.summary.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
-                check.summary = "No se admiten símbolos, sólo texto";
+        if (newForm){
+            if(!newForm.summary.length) check.summary = "Must have a summary";
+            else if (newForm.summary.length < 4) check.summary = "Summary must have more than 4 letters";
+            else if (!newForm.summary.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
+                check.summary = "Only letters are allowed";
             }
         } else { 
             check.summary = undefined
             }
         
         // validar tipo de plato
-        if (form.hasOwnProperty('dishTypes')){
-            if(!form.dishTypes.length) check.dishTypes = "Debes completar el campo Tipo de plato";
-            else if (!form.dishTypes.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
-                check.dishTypes = "No se admiten símbolos, sólo texto";
+        if (newForm){
+            if(!newForm.dishTypes.length) check.dishTypes = "Must have a Dish type";
+            else if (!newForm.dishTypes.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
+                check.dishTypes = "Only letters are allowed";
             }
         } else { 
             check.dishTypes = undefined
             }
         
         //validar puntuación
-        if (form.hasOwnProperty('spoonacularScore')){
-            if(!form.spoonacularScore.length) check.spoonacularScore = "Debes completar la puntuación de la receta";
-            else if (form.spoonacularScore <1) check.spoonacularScore = "La puntuación no puede ser menor a 1";
-            else if(form.spoonacularScore >100) check.spoonacularScore = "La puntuación no puede ser mayor a 100";
+        if (newForm){
+            if(!newForm.spoonacularScore.length) check.spoonacularScore = "Must have a Score";
+            else if (Number(newForm.spoonacularScore <1)) check.spoonacularScore = "Score cannot be less than 1";
+            else if(Number(newForm.spoonacularScore >100)) check.spoonacularScore = "Score cannot be higher than 100";
         } else { 
             check.spoonacularScore = undefined
             }
         
         // validar nivel de comida saludable
-        if (form.hasOwnProperty('healthScore')){
-            if(!form.healthScore.length) check.healthScore = "Debes completar la puntuación de la receta";
-            else if (form.healthScore <1) check.healthScore = "La puntuación no puede ser menor a 1";
-            else if(form.healthScore >100) check.healthScore = "La puntuación no puede ser mayor a 100";
+        if (newForm){
+            if(!newForm.healthScore.length) check.healthScore = "Must have a Healt Score";
+            else if (Number(newForm.healthScore <1)) check.healthScore = "Score cannot be less than 1";
+            else if(Number(newForm.healthScore >100)) check.healthScore = "Score cannot be higher than 100";
         } else { 
             check.healthScore = undefined
             }
 
         //validar los pasos
-        if (form.hasOwnProperty('steps')){
-            if(!form.steps.length) check.steps = "Debes completar el campo Pasos a realizar";
-            else if (!form.steps.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
-                check.steps = "No se admiten símbolos, sólo texto";
+        if (newForm){
+            if(!newForm.steps.length) check.steps = "Must have a Steps";
+            else if (!newForm.steps.split("").every((l) => /[a-zñéóúíá\s]/i.test(l))) {
+                check.steps = "Only letters are allowed";
             }
         } else { 
             check.steps = undefined
             }
     
         //validar dietas
-        if (!selectedDiets.length) check.diets = "Debes seleccionar al menos una dieta";
+        if (selectedDiets.length < 2) check.diets = "Must have 2 Type of diets";
         else { check.diets = undefined}
     
         return check
     };
-    /* let navigate = useNavigate();
-
-    const goHome = ()=>{
-        dispatch(getAllRecipes);
-        navigate('/home');
-    }; */
 
 
     const onName = (v) => {
-        setForm((prev) => {
-            return {
-                ...prev,
-                name: v.target.value
-                };
-                        
-        });
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            name: v.target.value
+        }
+        setForm(newForm);
+        let check = validatorForm(newForm)
         setErrors(check)
 
     };
     const onSummary = (v) => {
-        setForm((prev) => {
-            return {
-                ...prev,
-                summary: v.target.value
-                };
-        });
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            summary: v.target.value
+        }
+        setForm(newForm);
+        let check = validatorForm(newForm)
         setErrors(check)
     };
 
     const onDishTypes = (v) => {
-        setForm((prev) => {
-            return {
-                ...prev,
-                dishTypes: v.target.value
-                };
-        });
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            dishTypes: v.target.value
+        }
+        setForm(newForm);
+        let check = validatorForm(newForm)
         setErrors(check)
     };
 
     const onSteps = (v) => {
-        setForm((prev) => {
-            return {
-                ...prev,
-                steps: v.target.value
-            };
-        });
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            steps: v.target.value
+        }
+        setForm(newForm);
+        let check = validatorForm(newForm)
         setErrors(check)
     };
 
     const onScore = (v) => {
-         setForm((prev) => {
-            return {
-                ...prev,
-                spoonacularScore: v.target.value
-            };
-        });
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            spoonacularScore: v.target.value
+        }
+        setForm(newForm);
+       let check = validatorForm(newForm)
         setErrors(check)
     };
     
    
 
     const onHealtScore = (v) => {
-        setForm((prev) => {
-            return {
-             ...prev,
-                healthScore: v.target.value
-            };
-        });  
-        let check = validatorForm()
+        const newForm = {
+            ...form,
+            healthScore: v.target.value
+        }
+        setForm(newForm);  
+        let check = validatorForm(newForm)
         setErrors(check)
     };
     
 
     const onDiets = (value) => {
-        if (!selectedDiets.includes(value.target.value)) setSelectedDiets((prev) => [...prev, value.target.value]);
+        if (!selectedDiets.includes(value.target.value)) 
+        setSelectedDiets((prev) => [...prev, value.target.value]);
         let check = validatorForm()
         setErrors(check)
     };
@@ -188,25 +177,25 @@ export default function CreateRecipe(){
         e.preventDefault();
         let check = validatorForm()
         setErrors(check)
-        //console.log(selectedDiets, "FORM DIETS")
 
-        //let allGood = { ...form, diets: selectedDiets.join(", ")};
-        //console.log(allGood, "ALL GOOD")
-        dispatch(postRecipe({...form, diets: selectedDiets}));
-        (alert("Receta creada correctamente"));
-
+        if(selectedDiets.length<2){
+            alert("You must select at least 2 diets")
+        } else {
+          dispatch(postRecipe({...form, diets: selectedDiets}));
+            (alert("Receta creada correctamente")) 
+        }
     };
 
 
     return (
         <div>
             <NavLink to='/home'>
-                <button>Volver</button>
+                <button>Home</button>
             </NavLink>
-            <h1>Crea tu receta</h1>
+            <h1>Create your recipe</h1>
             <form onSubmit={(e) => onSubmit(e)}>
                 <div>
-                    <h4>Nombre</h4>
+                    <h4>Name</h4>
                     <input 
                     required
                     onChange={(e) => onName(e)}
@@ -221,7 +210,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Resumen del plato</h4>
+                    <h4>Summary</h4>
                     <input
                     required
                     onChange={(e) => onSummary(e)} 
@@ -235,7 +224,7 @@ export default function CreateRecipe(){
                         )}
                 </div>
                 <div>
-                    <h4>Tipo de plato</h4>
+                    <h4>Dish Types</h4>
                     <input
                     required
                     onChange={(e) => onDishTypes(e)} 
@@ -250,7 +239,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Puntuación</h4>
+                    <h4>Score</h4>
                     <input 
                     required
                     onChange={(e)=> onScore(e)}
@@ -265,7 +254,7 @@ export default function CreateRecipe(){
                 </div>
                 
                 <div>
-                    <h4>Es saludable?</h4>
+                    <h4>Health Score</h4>
                     <input 
                     required
                     onChange={(e) => onHealtScore(e)}
@@ -280,7 +269,7 @@ export default function CreateRecipe(){
                 </div>
 
                 <div>
-                    <h4>Pasos a realizar</h4>
+                    <h4>Steps/Instructions</h4>
                     <input
                     required
                     onChange={(e) => onSteps(e)} 
@@ -295,10 +284,9 @@ export default function CreateRecipe(){
                 </div>
 
                 <div>
-                    <h4>Tipo de dietas</h4>
+                    <h4>Type of diet</h4>
                     <select onChange={(e)=> onDiets(e)}>
-                        <option>Tipo de dieta </option>
-                        <option value="all">Todas </option>
+                        <option value="all">All </option>
                         <option value="vegan">Vegan</option>
                         <option value="gluten free">Gluten free</option>
                         <option value="dairy free">Dairy free</option>
@@ -313,7 +301,7 @@ export default function CreateRecipe(){
                     {errors.diets && (
                         <span>{errors.diets}</span>
                         )}
-                    {/* <ul><li>{selectedDiets.join(", ")}</li></ul> */}
+
                     <div>
                         {selectedDiets.map((diet) => (
                             <span key={diet}>
@@ -325,7 +313,7 @@ export default function CreateRecipe(){
                         ))}
                     </div>
                 </div>
-                <button type="submit">Crear Receta</button>
+                <button type="submit">Create Recipe</button>
             </form>
         </div>
     )
