@@ -17,7 +17,7 @@ export default function NavBar(){
         e.preventDefault()
         if (name) {
             distpach(getNameRecipes(name));
-          } else alert("El campo de busqueda está vacío!")
+          } else alert("Search is empty!")
         setName("")
     }
 
@@ -25,12 +25,12 @@ export default function NavBar(){
         <div className={s.navBar_div}>
             <input 
             type= 'text' 
-            placeholder="Buscar comidas"
+            placeholder="What do you want to eat?"
             onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
             onChange = {(e) => handleInputChange(e)}
             value={name}
             />
-            <button type='submit' onClick= {(e)=> handleSubmit(e)}>Buscar</button>
+            <button type='submit' onClick= {(e)=> handleSubmit(e)}>Search</button>
         </div>
     )
 }

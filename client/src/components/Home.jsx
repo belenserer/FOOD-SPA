@@ -57,6 +57,7 @@ export default function Home() {
         
     }
 
+
     return(
         <div className={s.home}>
            
@@ -94,6 +95,7 @@ export default function Home() {
                     <option value= "ascName">Name A-Z </option>
                     <option value="descName">Name Z-A</option>
                 </select>
+
                 <br/>
                 <button> </button>
                 <Paginado

@@ -9,7 +9,6 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
-    // { type: ORDER_BY, payload: "nameAsc"}
     
     switch (action.type){
         case GET_ALL_RECIPES:
@@ -39,7 +38,6 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: recipesFiltered
-
             }
         
         case ORDER_BY:
@@ -97,6 +95,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 detail: action.payload
             }
+            
 
         default:
             return state

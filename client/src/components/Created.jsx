@@ -8,8 +8,9 @@ import { NavLink } from "react-router-dom";
 
 export default function CreateRecipe(){
     const dispatch = useDispatch();
-    const diets = useSelector(state=> state.diets);
+    //const diets = useSelector(state=> state.diets);
     const [errors, setErrors] = useState({})
+    console.log(errors)
 
 
     useEffect(() => {
@@ -89,10 +90,7 @@ export default function CreateRecipe(){
         } else { 
             check.steps = undefined
             }
-    
-        //validar dietas
-        if (selectedDiets.length < 2) check.diets = "Must have 2 Type of diets";
-        else { check.diets = undefined}
+
     
         return check
     };
@@ -162,9 +160,10 @@ export default function CreateRecipe(){
     
 
     const onDiets = (value) => {
-        if (!selectedDiets.includes(value.target.value)) 
-        setSelectedDiets((prev) => [...prev, value.target.value]);
-        let check = validatorForm()
+        if (!selectedDiets.includes(value.target.value)) {
+            setSelectedDiets([...selectedDiets, value.target.value]);
+        }
+        let check = validatorForm(form)
         setErrors(check)
     };
 
@@ -175,15 +174,17 @@ export default function CreateRecipe(){
 
     const onSubmit = (e)=> {
         e.preventDefault();
-        let check = validatorForm()
-        setErrors(check)
-
-        if(selectedDiets.length<2){
+        console.log({errors})
+        
+        if (errors.name || errors.summary || errors.spoonacularScore || errors.healthScore || errors.dishTypes || errors.steps) {
+            alert("You must correct errors")
+        } else if(selectedDiets.length<2){
             alert("You must select at least 2 diets")
         } else {
-          dispatch(postRecipe({...form, diets: selectedDiets}));
-            (alert("Receta creada correctamente")) 
+            dispatch(postRecipe({...form, diets: selectedDiets}));
+            (alert("Recipe created succesfully"))
         }
+
     };
 
 

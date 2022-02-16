@@ -3,7 +3,6 @@ export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
 export const GET_DIETS = 'GET_DIETS';
 export const FILTER_BY_DIET = 'FILTER_BY_DIET';
 export const ORDER_BY = 'ORDER_BY';
-//export const ORDER_BY_SCORE = 'ORDER_BY_SCORE';
 export const GET_NAME_RECIPES = 'GET_NAME_RECIPES';
 export const POST_RECIPE = 'POST_RECIPE';
 export const GET_DETAIL = 'GET_DETAIL';
@@ -87,5 +86,4 @@ export function getDetail(id){
         }
     }
 };
-
 
